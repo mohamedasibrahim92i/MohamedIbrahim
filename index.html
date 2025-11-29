@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mohamed Ibrahim | Technology Architect</title>
+  <link rel="icon" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Source+Code+Pro:wght@300;400;500&display=swap');
+
+    :root {
+      --bg: #0a0f14;
+      --text: #4af80b;
+      --accent: #0af791;
+      --glow: rgba(10, 247, 145, 0.3);
+      --card-bg: #111820;
+      --border: #1a2633;
+      --sidebar-bg: rgba(17, 24, 32, 0.92);
+      --hover-bg: rgba(10, 247, 145, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Code Pro', monospace;
+      line-height: 1.7;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .static-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(10,247,145,0.05) 0%, transparent 20%),
+        repeating-linear-gradient(rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 100%);
+      opacity: 0.4;
+      z-index: -1;
+    }
+
+    /* News ticker styles */
+    .news-ticker-container {
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+    }
+
+    .news-ticker {
+      display: flex;
+      white-space: nowrap;
+      animation: scroll 25s linear infinite;
+      padding: 8px 0;
+      font-size: 0.85em;
+    }
+
+    .news-ticker:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      padding: 0 25px;
+      border-right: 1px solid rgba(10, 247, 145, 0.2);
+    }
+
+    .ticker-item:last-child {
+      border-right: none;
+    }
+
+    .ticker-label {
+      color: var(--accent);
+      margin-right: 4px;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Main content container */
+    .container {
+      max-width: 850px;
+      margin: 100px auto 50px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Glitch Effect - NOW PERMANENT ON NAME/TITLE */
+    @keyframes glitch {
+      0% { text-shadow: 0 0 0 var(--accent); }
+      2% { text-shadow: -2px 0 var(--accent), 2px 0 #ff00c8; }
+      4% { text-shadow: -2px 0 #ff00c8, 2px 0 var(--accent); }
+      6%, 100% { text-shadow: 0 0 0 var(--accent); }
+    }
+
+    .name-glitch {
+      font-family: 'Orbitron', sans-serif;
+      position: relative;
+      animation: glitch 6s infinite;
+      text-shadow: 0 0 10px rgba(10, 247, 145, 0.7);
+    }
+
+    .title-glitch {
+      display: block;
+      font-size: 1.2em;
+      color: #4af80b;
+      margin-top: 8px;
+      letter-spacing: 1px;
+      animation: glitch 8s infinite;
+      animation-delay: 1s;
+      opacity: 0.9;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.6em;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      font-size: 1.15em;
+      color: #4af80b;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    .vision-mission {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border: 1px solid var(--border);
+    }
+
+    .vision-mission h2 {
+      color: var(--accent);
+      margin-bottom: 14px;
+      font-size: 1.3em;
+    }
+
+    .vision-mission p {
+      margin-bottom: 10px;
+      font-size: 0.98em;
+      opacity: 0.95;
+      line-height: 1.8;
+    }
+
+    section {
+      margin-bottom: 35px;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.4em;
+      letter-spacing: 0.5px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-item {
+      background: var(--card-bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 0.92em;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .skill-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 12px var(--glow);
+      border-color: var(--accent);
+    }
+
+    .experience-item {
+      margin-bottom: 25px;
+      padding-left: 12px;
+      border-left: 2px solid var(--border);
+      padding-bottom: 20px;
+    }
+
+    .experience-item:last-child {
+      border-left: 2px solid transparent;
+      padding-bottom: 0;
+    }
+
+    .role {
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .company {
+      color: #4af80b;
+      font-size: 0.95em;
+      margin-bottom: 6px;
+    }
+
+    .date {
+      font-size: 0.85em;
+      color: #7a9a90;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      font-size: 0.93em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0 10px;
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+      font-size: 0.9em;
+    }
+
+    .contacts-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .contacts-bottom a {
+      color: #6af20d;
+      text-decoration: none;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .contacts-bottom a:hover {
+      background: rgba(10, 247, 145, 0.08);
+      box-shadow: 0 0 10px var(--glow);
+    }
+
+    .welcome {
+      margin-top: 16px;
+      color: #4af80b;
+      font-style: italic;
+    }
+
+    /* Sidebar/Hoverboard styles */
+    .hoverboard {
+      position: fixed;
+      right: -300px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 280px;
+      background: var(--sidebar-bg);
+      border-left: 1px solid var(--border);
+      padding: 25px 20px;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+      transition: right 0.4s ease;
+      z-index: 1000;
+      border-radius: 8px 0 0 8px;
+    }
+
+    .hoverboard-trigger {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 80px;
+      background: #6af20d;
+      cursor: pointer;
+      border-radius: 4px 0 0 4px;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .hoverboard-trigger:hover {
+      width: 18px;
+    }
+
+    .hoverboard.open {
+      right: 0;
+    }
+
+    .hoverboard h3 {
+      color: #6af20d;
+      margin-bottom: 20px;
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2em;
+    }
+
+    .contact-option {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .contact-option:hover {
+      background: var(--hover-bg);
+      transform: translateX(-5px);
+    }
+
+    .contact-icon {
+      font-size: 1.2em;
+      width: 30px;
+      color: #6af20d;
+    }
+
+    .contact-text {
+      flex: 1;
+      font-size: 0.95em;
+    }
+
+    .contact-text a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-text a:hover {
+      color: #6af20d;
+    }
+
+    .backroom-link {
+      margin-top: 20px;
+      display: block;
+      padding: 10px;
+      background: rgba(10, 247, 145, 0.08);
+      border: 1px solid #6af20d;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .backroom-link:hover {
+      background: rgba(10, 247, 145, 0.15);
+      transform: scale(1.03);
+    }
+
+    .backroom-link a {
+      color: #6af20d;
+      text-decoration: none;
+      display: block;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @media (max-width: 900px) {
+      .hoverboard {
+        width: 260px;
+      }
+      
+      .container {
+        margin-top: 120px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hoverboard, .hoverboard-trigger {
+        display: none;
+      }
+      
+      .news-ticker-container {
+        display: none;
+      }
+      
+      .container {
+        margin-top: 40px;
+      }
+      
+      h1 { font-size: 2.2em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="static-overlay"></div>
+  
+  <!-- News Ticker -->
+  <div class="news-ticker-container">
+    <div class="news-ticker">
+      <div class="ticker-item"><span class="ticker-label">EMAIL:</span> mohamed.a.s.ibrahim.9.2.i@gmail.com</div>
+      <div class="ticker-item"><span class="ticker-label">PHONE:</span> +601127246607</div>
+      <div class="ticker-item"><span class="ticker-label">WHATSAPP:</span> +201023977067</div>
+      <div class="ticker-item"><span class="ticker-label">LOCATION:</span> Kuala Lumpur, Malaysia</div>
+      <div class="ticker-item"><span class="ticker-label">STATUS:</span> Available Immediately • Ready for Sponsorship</div>
+      <div class="ticker-item"><span class="ticker-label">PORTFOLIO:</span> devopstech92.github.io/MohamedIbrahim</div>
+      <div class="ticker-item"><span class="ticker-label">BACKROOM:</span> thebackroomi.netlify.app/i</div>
+    </div>
+  </div>
+
+  <!-- Hoverboard/Sidebar -->
+  <div class="hoverboard-trigger" id="hoverboardTrigger"></div>
+  <div class="hoverboard" id="hoverboard">
+    <h3>CONTACT ME</h3>
+    <div class="contact-option">
+      <div class="contact-icon">✉️</div>
+      <div class="contact-text">
+        <a href="mailto:mohamed.a.s.ibrahim.9.2.i@gmail.com">mohamed.a.s.ibrahim.9.2.i@gmail.com</a>
+      </div>
+    </div>
+    <div class="contact-option">
+      <div class="contact-icon">📱</div>
+      <div class="contact-text">
+        <a href="tel:+601127246607">+601127246607</a>
+      </div>
+    </div>
+    <div class="contact-option">
+      <div class="contact-icon">💬</div>
+      <div class="contact-text">
+        <a href="https://wa.me/201023977067" target="_blank">WhatsApp: +201023977067</a>
+      </div>
+    </div>
+    <div class="contact-option">
+      <div class="contact-icon">🔗</div>
+      <div class="contact-text">
+        <a href="https://linkedin.com/in/mohamedasibrahim/" target="_blank">linkedin.com/in/mohamedasibrahim</a>
+      </div>
+    </div>
+    <div class="backroom-link">
+      <a href="https://thebackroomi.netlify.app/i" target="_blank">ENTER THE BACKROOM</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1 class="name-glitch">MOHAMED IBRAHIM</h1>
+      <span class="title-glitch">TECHNOLOGY ARCHITECT & SYSTEMS INTEGRATOR</span>
+      <div style="text-align: center; margin-top: 15px; font-size: 0.9em; color: #7a9a90;">
+        Kuala Lumpur, Malaysia • Available Immediately • Ready for Sponsorship
+      </div>
+    </header>
+
+    <div class="vision-mission">
+      <h2>VISION</h2>
+      <p>To architect technological ecosystems that transcend industry boundaries — where infrastructure becomes invisible, intelligence becomes intuitive, and systems evolve with human ambition.</p>
+      
+      <h2>MISSION</h2>
+      <p>To bridge the chasm between raw technology and human impact by designing resilient, adaptive systems that solve tomorrow's challenges today. I transform complexity into clarity, turning constraints into catalysts for innovation across networks, security, and digital infrastructure.</p>
+    </div>
+
+    <section>
+      <h2>SOFT & COMMUNICATION SKILLS</h2>
+      <div class="skills-grid">
+        <div class="skill-item">Strategic Leadership</div>
+        <div class="skill-item">Cross-Functional Alignment</div>
+        <div class="skill-item">Stakeholder Communication</div>
+        <div class="skill-item">Vendor & Partner Integration</div>
+        <div class="skill-item">Technical Storytelling</div>
+        <div class="skill-item">Mentorship & Team Development</div>
+        <div class="skill-item">Risk Assessment & Mitigation</div>
+        <div class="skill-item">Project Lifecycle Management</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>TECHNICAL EXPERTISE</h2>
+      <div class="skills-grid">
+        <div class="skill-item">Network Architecture</div>
+        <div class="skill-item">GPON / XGS-PON / FTTx</div>
+        <div class="skill-item">Huawei MA5600T / U2000</div>
+        <div class="skill-item">ZTE C300 / C600</div>
+        <div class="skill-item">Nokia ISAM / 7750 SR</div>
+        <div class="skill-item">Cisco IOS-XE / ASR</div>
+        <div class="skill-item">Wi-Fi 6 / 6E / 7 Mesh</div>
+        <div class="skill-item">TR-069 / ACS Systems</div>
+        <div class="skill-item">Python Automation</div>
+        <div class="skill-item">Ansible / GitOps</div>
+        <div class="skill-item">REST APIs / NETCONF / YANG</div>
+        <div class="skill-item">BGP / OSPF / MPLS / L2-L3 VPN</div>
+        <div class="skill-item">QoS / VLAN / STP</div>
+        <div class="skill-item">Network Security (CEH Certified)</div>
+        <div class="skill-item">SD-WAN / NFV</div>
+        <div class="skill-item">Cloud Infrastructure Integration</div>
+        <div class="skill-item">Wireless Site Surveys & Optimization</div>
+        <div class="skill-item">Infrastructure as Code (IaC)</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>PROFESSIONAL EXPERIENCE</h2>
+      
+      <div class="experience-item">
+        <div class="role">Senior Access Solutions & Automation Engineer</div>
+        <div class="company">Freelance Consultant – Remote (MEA, Asia)</div>
+        <span class="date">Kuala Lumpur | Sept 2021 – Present</span>
+        <ul>
+          <li>Shaped vendor solutions for 15+ ISPs; defined acceptance criteria for ONTs, OLTs, and Wi-Fi CPEs.</li>
+          <li>Prevented $1.2M+ in OPEX by rejecting 3 non-compliant CPE models early.</li>
+          <li>Built Ansible/Python frameworks enforcing security/QoS across multi-vendor environments.</li>
+          <li>Integrated vendor platforms via custom REST APIs — reduced provisioning from hours to minutes.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <div class="role">Access Layer Solutions & Integration Engineer</div>
+        <div class="company">Leading ISP – Egypt</div>
+        <span class="date">Mar 2019 – Sept 2021</span>
+        <ul>
+          <li>Led validation for 11M+ subscribers; improved device reliability by 80% via firmware enhancements.</li>
+          <li>Co-engineered QoS, security, and ACS behavior with 20+ vendor R&D teams.</li>
+          <li>Developed Python analytics to forecast CPE failures — boosted network reliability by 60%.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <div class="role">Technical Support Lead & Field Validation Specialist</div>
+        <div class="company">Leading ISP – Egypt</div>
+        <span class="date">May 2014 – Feb 2019</span>
+        <ul>
+          <li>Analyzed 30,000+ tickets to drive vendor patches — reduced repeat contacts by 25%.</li>
+          <li>Built field-to-lab validation feedback loops for consistent performance.</li>
+          <li>Trained 14 engineers in solution-oriented troubleshooting methodology.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div class="contacts-bottom">
+        <a href="https://devopstech92.github.io/MohamedIbrahim/" target="_blank">PORTFOLIO</a>
+        <a href="https://thebackroomi.netlify.app/i" target="_blank">BACKROOM</a>
+        <a href="https://linkedin.com/in/mohamedasibrahim/" target="_blank">LINKEDIN</a>
+      </div>
+      <div class="welcome">
+        Open to roles in technology architecture, systems integration, and digital transformation.<br>
+        Available immediately • Remote, hybrid, or relocation • Ready for sponsorship.
+      </div>
+      <p style="margin-top: 15px; color: #7a9a90; font-size: 0.85em;">
+        You're not on the list. You're in the room.
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // HOVERBOARD FUNCTIONALITY ONLY (no access granted animation)
+    document.addEventListener('DOMContentLoaded', () => {
+      const hoverboard = document.getElementById('hoverboard');
+      const trigger = document.getElementById('hoverboardTrigger');
+      
+      trigger.addEventListener('click', () => {
+        hoverboard.classList.toggle('open');
+      });
+      
+      // Click outside to close
+      document.addEventListener('click', (e) => {
+        if (hoverboard.classList.contains('open') && 
+            !hoverboard.contains(e.target) && 
+            !trigger.contains(e.target)) {
+          hoverboard.classList.remove('open');
+        }
+      });
+      
+      // Static overlay animation
+      setInterval(() => {
+        const staticOverlay = document.querySelector('.static-overlay');
+        if (staticOverlay) {
+          staticOverlay.style.opacity = 0.3 + Math.random() * 0.15;
+        }
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
