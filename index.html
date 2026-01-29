@@ -1,614 +1,931 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mohamed Ibrahim | Technology Architect</title>
-  <link rel="icon" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Source+Code+Pro:wght@300;400;500&display=swap');
-
-    :root {
-      --bg: #0a0f14;
-      --text: #4af80b;
-      --accent: #0af791;
-      --glow: rgba(10, 247, 145, 0.3);
-      --card-bg: #111820;
-      --border: #1a2633;
-      --sidebar-bg: rgba(17, 24, 32, 0.92);
-      --hover-bg: rgba(10, 247, 145, 0.1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Source Code Pro', monospace;
-      line-height: 1.7;
-      padding: 0;
-      margin: 0;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .static-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(10,247,145,0.05) 0%, transparent 20%),
-        repeating-linear-gradient(rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 100%);
-      opacity: 0.4;
-      z-index: -1;
-    }
-
-    /* News ticker styles */
-    .news-ticker-container {
-      background: rgba(0, 0, 0, 0.7);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      z-index: 100;
-    }
-
-    .news-ticker {
-      display: flex;
-      white-space: nowrap;
-      animation: scroll 25s linear infinite;
-      padding: 8px 0;
-      font-size: 0.85em;
-    }
-
-    .news-ticker:hover {
-      animation-play-state: paused;
-    }
-
-    .ticker-item {
-      padding: 0 25px;
-      border-right: 1px solid rgba(10, 247, 145, 0.2);
-    }
-
-    .ticker-item:last-child {
-      border-right: none;
-    }
-
-    .ticker-label {
-      color: var(--accent);
-      margin-right: 4px;
-    }
-
-    @keyframes scroll {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* Main content container */
-    .container {
-      max-width: 850px;
-      margin: 100px auto 50px;
-      padding: 0 20px;
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Glitch Effect - NOW PERMANENT ON NAME/TITLE */
-    @keyframes glitch {
-      0% { text-shadow: 0 0 0 var(--accent); }
-      2% { text-shadow: -2px 0 var(--accent), 2px 0 #ff00c8; }
-      4% { text-shadow: -2px 0 #ff00c8, 2px 0 var(--accent); }
-      6%, 100% { text-shadow: 0 0 0 var(--accent); }
-    }
-
-    .name-glitch {
-      font-family: 'Orbitron', sans-serif;
-      position: relative;
-      animation: glitch 6s infinite;
-      text-shadow: 0 0 10px rgba(10, 247, 145, 0.7);
-    }
-
-    .title-glitch {
-      display: block;
-      font-size: 1.2em;
-      color: #4af80b;
-      margin-top: 8px;
-      letter-spacing: 1px;
-      animation: glitch 8s infinite;
-      animation-delay: 1s;
-      opacity: 0.9;
-    }
-
-    header {
-      text-align: center;
-      padding: 30px 0 20px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 30px;
-    }
-
-    h1 {
-      font-size: 2.6em;
-      color: var(--accent);
-      margin-bottom: 8px;
-      letter-spacing: 1px;
-    }
-
-    .tagline {
-      font-size: 1.15em;
-      color: #4af80b;
-      margin-bottom: 15px;
-      font-weight: 300;
-    }
-
-    .vision-mission {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-      border: 1px solid var(--border);
-    }
-
-    .vision-mission h2 {
-      color: var(--accent);
-      margin-bottom: 14px;
-      font-size: 1.3em;
-    }
-
-    .vision-mission p {
-      margin-bottom: 10px;
-      font-size: 0.98em;
-      opacity: 0.95;
-      line-height: 1.8;
-    }
-
-    section {
-      margin-bottom: 35px;
-    }
-
-    h2 {
-      font-family: 'Orbitron', sans-serif;
-      color: var(--accent);
-      margin-bottom: 18px;
-      font-size: 1.4em;
-      letter-spacing: 0.5px;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .skill-item {
-      background: var(--card-bg);
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      font-size: 0.92em;
-      transition: all 0.3s ease;
-      cursor: default;
-    }
-
-    .skill-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 12px var(--glow);
-      border-color: var(--accent);
-    }
-
-    .experience-item {
-      margin-bottom: 25px;
-      padding-left: 12px;
-      border-left: 2px solid var(--border);
-      padding-bottom: 20px;
-    }
-
-    .experience-item:last-child {
-      border-left: 2px solid transparent;
-      padding-bottom: 0;
-    }
-
-    .role {
-      font-weight: bold;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .company {
-      color: #4af80b;
-      font-size: 0.95em;
-      margin-bottom: 6px;
-    }
-
-    .date {
-      font-size: 0.85em;
-      color: #7a9a90;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    li {
-      margin-bottom: 6px;
-      font-size: 0.93em;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 0 10px;
-      border-top: 1px solid var(--border);
-      margin-top: 20px;
-      font-size: 0.9em;
-    }
-
-    .contacts-bottom {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
-      margin: 20px 0;
-    }
-
-    .contacts-bottom a {
-      color: #6af20d;
-      text-decoration: none;
-      padding: 6px 12px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: all 0.3s;
-    }
-
-    .contacts-bottom a:hover {
-      background: rgba(10, 247, 145, 0.08);
-      box-shadow: 0 0 10px var(--glow);
-    }
-
-    .welcome {
-      margin-top: 16px;
-      color: #4af80b;
-      font-style: italic;
-    }
-
-    /* Sidebar/Hoverboard styles */
-    .hoverboard {
-      position: fixed;
-      right: -300px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 280px;
-      background: var(--sidebar-bg);
-      border-left: 1px solid var(--border);
-      padding: 25px 20px;
-      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
-      transition: right 0.4s ease;
-      z-index: 1000;
-      border-radius: 8px 0 0 8px;
-    }
-
-    .hoverboard-trigger {
-      position: fixed;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 12px;
-      height: 80px;
-      background: #6af20d;
-      cursor: pointer;
-      border-radius: 4px 0 0 4px;
-      transition: all 0.3s ease;
-      z-index: 999;
-    }
-
-    .hoverboard-trigger:hover {
-      width: 18px;
-    }
-
-    .hoverboard.open {
-      right: 0;
-    }
-
-    .hoverboard h3 {
-      color: #6af20d;
-      margin-bottom: 20px;
-      text-align: center;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2em;
-    }
-
-    .contact-option {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .contact-option:hover {
-      background: var(--hover-bg);
-      transform: translateX(-5px);
-    }
-
-    .contact-icon {
-      font-size: 1.2em;
-      width: 30px;
-      color: #6af20d;
-    }
-
-    .contact-text {
-      flex: 1;
-      font-size: 0.95em;
-    }
-
-    .contact-text a {
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .contact-text a:hover {
-      color: #6af20d;
-    }
-
-    .backroom-link {
-      margin-top: 20px;
-      display: block;
-      padding: 10px;
-      background: rgba(10, 247, 145, 0.08);
-      border: 1px solid #6af20d;
-      border-radius: 4px;
-      text-align: center;
-      font-weight: 500;
-      transition: all 0.3s;
-    }
-
-    .backroom-link:hover {
-      background: rgba(10, 247, 145, 0.15);
-      transform: scale(1.03);
-    }
-
-    .backroom-link a {
-      color: #6af20d;
-      text-decoration: none;
-      display: block;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    @media (max-width: 900px) {
-      .hoverboard {
-        width: 260px;
-      }
-      
-      .container {
-        margin-top: 120px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hoverboard, .hoverboard-trigger {
-        display: none;
-      }
-      
-      .news-ticker-container {
-        display: none;
-      }
-      
-      .container {
-        margin-top: 40px;
-      }
-      
-      h1 { font-size: 2.2em; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Ibrahim | Senior Network Infrastructure Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: rgb(249, 5, 44);
+            --primary-light: rgb(249, 5, 44);
+            --primary-dark: rgb(200, 4, 35);
+            --secondary: #1a1a2e;
+            --accent: #16213e;
+            --text: #eaeaea;
+            --muted: #a0a0a0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--secondary);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Terminal Cursor Animation */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: var(--primary);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Network Grid Background */
+        .network-bg {
+            background-image: 
+                linear-gradient(rgba(249, 5, 44, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249, 5, 44, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Skill Tag Hover Effect */
+        .skill-tag {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(249, 5, 44, 0.3);
+        }
+        
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .skill-tag:hover::before {
+            left: 100%;
+        }
+        
+        /* Timeline Line */
+        .timeline-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+        
+        /* Metric Cards */
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(249, 5, 44, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(249, 5, 44, 0.1);
+        }
+        
+        /* Practice Cards 3D Effect */
+        .practice-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        /* Status Indicator */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Packet Animation */
+        .packet {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .glitch-text {
+            position: relative;
+        }
+        
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 rgb(249, 5, 44);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(30px, 9999px, 10px, 0); }
+            20% { clip: rect(80px, 9999px, 90px, 0); }
+            40% { clip: rect(10px, 9999px, 50px, 0); }
+            60% { clip: rect(60px, 9999px, 20px, 0); }
+            80% { clip: rect(40px, 9999px, 70px, 0); }
+            100% { clip: rect(90px, 9999px, 30px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(60px, 9999px, 30px, 0); }
+            20% { clip: rect(10px, 9999px, 80px, 0); }
+            40% { clip: rect(90px, 9999px, 20px, 0); }
+            60% { clip: rect(30px, 9999px, 60px, 0); }
+            80% { clip: rect(70px, 9999px, 40px, 0); }
+            100% { clip: rect(20px, 9999px, 90px, 0); }
+        }
+    </style>
 </head>
-<body>
-  <div class="static-overlay"></div>
-  
-  <!-- News Ticker -->
-  <div class="news-ticker-container">
-    <div class="news-ticker">
-      <div class="ticker-item"><span class="ticker-label">EMAIL:</span> mohamed.a.s.ibrahim.9.2.i@gmail.com</div>
-      <div class="ticker-item"><span class="ticker-label">PHONE:</span> +601160929842 </div>
-      <div class="ticker-item"><span class="ticker-label">WHATSAPP:</span> +601160929842</div>
-      <div class="ticker-item"><span class="ticker-label">LOCATION:</span> Kuala Lumpur, Malaysia</div>
-      <div class="ticker-item"><span class="ticker-label">STATUS:</span> Available Immediately</div>
-      <div class="ticker-item"><span class="ticker-label">PORTFOLIO:</span> https://mohamedasibrahim92i.github.io/MohamedIbrahim/ </div>
-      <div class="ticker-item"><span class="ticker-label">MI-Networks:</span> https://mi-networks.netlify.app/ </div>
-    </div>
-  </div>
+<body class="antialiased">
 
-  <!-- Hoverboard/Sidebar -->
-  <div class="hoverboard-trigger" id="hoverboardTrigger"></div>
-  <div class="hoverboard" id="hoverboard">
-    <h3>CONTACT ME</h3>
-    <div class="contact-option">
-      <div class="contact-icon">✉️</div>
-      <div class="contact-text">
-        <a href="mailto:mohamed.a.s.ibrahim.9.2.i@gmail.com">mohamed.a.s.ibrahim.9.2.i@gmail.com</a>
-      </div>
-    </div>
-    <div class="contact-option">
-      <div class="contact-icon">📱</div>
-      <div class="contact-text">
-        <a href="tel:+601127246607">+601127246607</a>
-      </div>
-    </div>
-    <div class="contact-option">
-      <div class="contact-icon">💬</div>
-      <div class="contact-text">
-        <a href="https://wa.me/+601160929841" target="_blank">WhatsApp: +601160929841</a>
-      </div>
-    </div>
-    <div class="contact-option">
-      <div class="contact-icon">🔗</div>
-      <div class="contact-text">
-        <a href="https://linkedin.com/in/mohamedasibrahim/" target="_blank">linkedin.com/in/mohamedasibrahim</a>
-      </div>
-    </div>
-    <div class="backroom-link">
-      <a href="https://thebackroomi.netlify.app/i" target="_blank">ENTER THE BACKROOM</a>
-    </div>
-  </div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-opacity-90 backdrop-blur-md border-b border-white/10 bg-[#1a1a2e]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="network" class="text-[rgb(249,5,44)] w-6 h-6"></i>
+                    <span class="font-mono font-bold text-xl tracking-tighter">MI_<span class="text-[rgb(249,5,44)]">NET</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="hover:text-[rgb(249,5,44)] transition-colors text-sm font-mono">01. Overview</a>
+                    <a href="#expertise" class="hover:text-[rgb(249,5,44)] transition-colors text-sm font-mono">02. Expertise</a>
+                    <a href="#experience" class="hover:text-[rgb(249,5,44)] transition-colors text-sm font-mono">03. Experience</a>
+                    <a href="#capabilities" class="hover:text-[rgb(249,5,44)] transition-colors text-sm font-mono">04. Projects</a>
+                    <a href="#metrics" class="hover:text-[rgb(249,5,44)] transition-colors text-sm font-mono">05. Metrics</a>
+                    <a href="#contact" class="px-4 py-2 border border-[rgb(249,5,44)] text-[rgb(249,5,44)] hover:bg-[rgb(249,5,44)] hover:text-white transition-all rounded text-sm font-mono">06. Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  <div class="container">
-    <header>
-      <h1 class="name-glitch">MOHAMED IBRAHIM</h1>
-      <span class="title-glitch">TECHNOLOGY ARCHITECT & SYSTEMS INTEGRATOR</span>
-      <div style="text-align: center; margin-top: 15px; font-size: 0.9em; color: #7a9a90;">
-        Kuala Lumpur, Malaysia • Available Immediately 
-      </div>
-    </header>
+    <!-- Hero Section with Terminal -->
+    <section class="relative min-h-screen flex items-center justify-center network-bg overflow-hidden pt-16">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#1a1a2e]/50 to-[#1a1a2e]"></div>
+        
+        <!-- Animated Packets -->
+        <div id="packets-container" class="absolute inset-0 pointer-events-none"></div>
 
-    <div class="vision-mission">
-      <h2>VISION</h2>
-      <p>To architect technological ecosystems that transcend industry boundaries — where infrastructure becomes invisible, intelligence becomes intuitive, and systems evolve with human ambition.</p>
-      
-      <h2>MISSION</h2>
-      <p>To bridge the chasm between raw technology and human impact by designing resilient, adaptive systems that solve tomorrow's challenges today. I transform complexity into clarity, turning constraints into catalysts for innovation across networks, security, and digital infrastructure.</p>
-    </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <div class="inline-flex items-center px-3 py-1 rounded-full border border-[rgb(249,5,44)]/30 bg-[rgb(249,5,44)]/10 text-[rgb(249,5,44)] text-xs font-mono">
+                    <span class="status-dot"></span>
+                    System Operational
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight glitch-text" data-text="Mohamed Ibrahim">
+                    Mohamed <span class="text-[rgb(249,5,44)]">Ibrahim</span>
+                </h1>
+                
+                <div class="h-8 font-mono text-xl text-[#a0a0a0]" id="typewriter">
+                    <span id="type-text"></span><span class="cursor"></span>
+                </div>
+                
+                <p class="text-lg text-gray-400 max-w-lg leading-relaxed">
+                    Network Infrastructure Engineer specializing in <span class="text-[rgb(249,5,44)]">GPON/FTTH</span>, 
+                    <span class="text-[rgb(249,5,44)]">Multi-Vendor Integration</span>, and 
+                    <span class="text-[rgb(249,5,44)]">Network Automation</span>.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="https://wa.me/601160929841" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-[rgb(249,5,44)] text-white rounded hover:bg-[rgb(200,4,35)] transition-all transform hover:scale-105 font-mono text-sm">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        WhatsApp
+                    </a>
+                    <a href="mailto:mohamed.a.s.ibrahim.9.2.i@gmail.com" class="flex items-center gap-2 px-6 py-3 border border-white/20 rounded hover:border-[rgb(249,5,44)] hover:text-[rgb(249,5,44)] transition-all font-mono text-sm">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        Email
+                    </a>
+                </div>
+            </div>
 
-    <section>
-      <h2>SOFT & COMMUNICATION SKILLS</h2>
-      <div class="skills-grid">
-        <div class="skill-item">Strategic Leadership</div>
-        <div class="skill-item">Cross-Functional Alignment</div>
-        <div class="skill-item">Stakeholder Communication</div>
-        <div class="skill-item">Vendor & Partner Integration</div>
-        <div class="skill-item">Technical Storytelling</div>
-        <div class="skill-item">Mentorship & Team Development</div>
-        <div class="skill-item">Risk Assessment & Mitigation</div>
-        <div class="skill-item">Project Lifecycle Management</div>
-      </div>
+            <!-- Terminal Window -->
+            <div class="bg-[#0d1117] rounded-lg border border-gray-800 shadow-2xl overflow-hidden font-mono text-sm">
+                <div class="bg-[#161b22] px-4 py-2 flex items-center gap-2 border-b border-gray-800">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-2 text-gray-500 text-xs">mohamed@network-engineer:~</span>
+                </div>
+                <div class="p-6 space-y-2 text-gray-300" id="terminal-content">
+                    <div class="typing-line opacity-0">$ show interface brief</div>
+                    <div class="typing-line opacity-0 text-green-400">Interface              IP-Address      OK? Method Status                Protocol</div>
+                    <div class="typing-line opacity-0">GigabitEthernet0/0/0   unassigned      YES unset  up                    up</div>
+                    <div class="typing-line opacity-0">Loopback0              10.10.10.1      YES manual up                    up</div>
+                    <div class="typing-line opacity-0">Tunnel0                192.168.1.1     YES manual up                    up</div>
+                    <div class="typing-line opacity-0">$ ansible-playbook deploy-gpon.yml</div>
+                    <div class="typing-line opacity-0 text-blue-400">PLAY [Deploy XGS-PON Configuration] *******************************************</div>
+                    <div class="typing-line opacity-0 text-green-400">TASK [Configure OLT] **********************************************************</div>
+                    <div class="typing-line opacity-0">changed: [olt-core-01]</div>
+                    <div class="typing-line opacity-0">changed: [olt-dist-02]</div>
+                    <div class="typing-line opacity-0 text-blue-400">PLAY RECAP ********************************************************************</div>
+                    <div class="typing-line opacity-0">olt-core-01                : ok=12   changed=4    unreachable=0    failed=0</div>
+                    <div class="typing-line opacity-0">$ <span class="animate-pulse">_</span></div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section>
-      <h2>TECHNICAL EXPERTISE</h2>
-      <div class="skills-grid">
-        <div class="skill-item">Network Architecture</div>
-        <div class="skill-item">GPON / XGS-PON / FTTx</div>
-        <div class="skill-item">Huawei MA5600T / U2000</div>
-        <div class="skill-item">ZTE C300 / C600</div>
-        <div class="skill-item">Nokia ISAM / 7750 SR</div>
-        <div class="skill-item">Cisco IOS-XE / ASR</div>
-        <div class="skill-item">Wi-Fi 6 / 6E / 7 Mesh</div>
-        <div class="skill-item">TR-069 / ACS Systems</div>
-        <div class="skill-item">Python Automation</div>
-        <div class="skill-item">Ansible / GitOps</div>
-        <div class="skill-item">REST APIs / NETCONF / YANG</div>
-        <div class="skill-item">BGP / OSPF / MPLS / L2-L3 VPN</div>
-        <div class="skill-item">QoS / VLAN / STP</div>
-        <div class="skill-item">Network Security (CEH Certified)</div>
-        <div class="skill-item">SD-WAN / NFV</div>
-        <div class="skill-item">Cloud Infrastructure Integration</div>
-        <div class="skill-item">Wireless Site Surveys & Optimization</div>
-        <div class="skill-item">Infrastructure as Code (IaC)</div>
-      </div>
+    <!-- Stats Overview -->
+    <section id="overview" class="py-20 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="metric-card p-6 rounded-lg text-center group">
+                    <div class="text-4xl font-bold text-[rgb(249,5,44)] mb-2 font-mono group-hover:scale-110 transition-transform">12+</div>
+                    <div class="text-sm text-gray-400">Years Experience</div>
+                </div>
+                <div class="metric-card p-6 rounded-lg text-center group">
+                    <div class="text-4xl font-bold text-[rgb(249,5,44)] mb-2 font-mono group-hover:scale-110 transition-transform">45K+</div>
+                    <div class="text-sm text-gray-400">Units Deployed</div>
+                </div>
+                <div class="metric-card p-6 rounded-lg text-center group">
+                    <div class="text-4xl font-bold text-[rgb(249,5,44)] mb-2 font-mono group-hover:scale-110 transition-transform">98%</div>
+                    <div class="text-sm text-gray-400">First-Time Resolution</div>
+                </div>
+                <div class="metric-card p-6 rounded-lg text-center group">
+                    <div class="text-4xl font-bold text-[rgb(249,5,44)] mb-2 font-mono group-hover:scale-110 transition-transform">100%</div>
+                    <div class="text-sm text-gray-400">Contract Renewal</div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section>
-      <h2>PROFESSIONAL EXPERIENCE</h2>
-      
-      <div class="experience-item">
-        <div class="role">Senior Access Solutions & Automation Engineer</div>
-        <div class="company">Freelance Consultant – Remote (MEA, Asia)</div>
-        <span class="date">Kuala Lumpur | Sept 2021 – Present</span>
-        <ul>
-          <li>Shaped vendor solutions for 15+ ISPs; defined acceptance criteria for ONTs, OLTs, and Wi-Fi CPEs.</li>
-          <li>Prevented $1.2M+ in OPEX by rejecting 3 non-compliant CPE models early.</li>
-          <li>Built Ansible/Python frameworks enforcing security/QoS across multi-vendor environments.</li>
-          <li>Integrated vendor platforms via custom REST APIs — reduced provisioning from hours to minutes.</li>
-        </ul>
-      </div>
+    <!-- Technical Expertise -->
+    <section id="expertise" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-[rgb(249,5,44)] font-mono text-2xl">02.</span>
+                    Technical SkillSet
+                </h2>
+                <div class="h-1 w-20 bg-[rgb(249,5,44)]"></div>
+            </div>
 
-      <div class="experience-item">
-        <div class="role">Access Layer Solutions & Integration Engineer</div>
-        <div class="company">Leading ISP – Egypt</div>
-        <span class="date">Mar 2019 – Sept 2021</span>
-        <ul>
-          <li>Led validation for 11M+ subscribers; improved device reliability by 80% via firmware enhancements.</li>
-          <li>Co-engineered QoS, security, and ACS behavior with 20+ vendor R&D teams.</li>
-          <li>Developed Python analytics to forecast CPE failures — boosted network reliability by 60%.</li>
-        </ul>
-      </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Protocols -->
+                <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)]/50 transition-all">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i data-lucide="share-2" class="text-[rgb(249,5,44)] w-6 h-6"></i>
+                        <h3 class="text-xl font-bold">Routing & Switching</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">BGP</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">OSPFv3</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">MPLS</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">L3VPN</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">QoS</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">IPv6</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">VRF</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">RADIUS/AAA</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">NAT64</span>
+                    </div>
+                </div>
 
-      <div class="experience-item">
-        <div class="role">Technical Support Lead & Field Validation Specialist</div>
-        <div class="company">Leading ISP – Egypt</div>
-        <span class="date">May 2014 – Feb 2019</span>
-        <ul>
-          <li>Analyzed 30,000+ tickets to drive vendor patches — reduced repeat contacts by 25%.</li>
-          <li>Built field-to-lab validation feedback loops for consistent performance.</li>
-          <li>Trained 14 engineers in solution-oriented troubleshooting methodology.</li>
-        </ul>
-      </div>
+                <!-- GPON/FTTH -->
+                <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)]/50 transition-all">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i data-lucide="signal" class="text-[rgb(249,5,44)] w-6 h-6"></i>
+                        <h3 class="text-xl font-bold">Access Technologies</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">XGS-PON</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">GPON</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">OMCI</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Huawei</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">ZTE</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">NOKIA</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Wi-Fi 6E/7</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Aruba</span>
+                    </div>
+                </div>
+
+                <!-- Cloud & SD-WAN -->
+                <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)]/50 transition-all">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i data-lucide="cloud" class="text-[rgb(249,5,44)] w-6 h-6"></i>
+                        <h3 class="text-xl font-bold">Cloud & SD-WAN</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Azure vWAN</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Cisco SD-WAN</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">ACI</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">IOS-XE</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">XR</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">NX-OS</span>
+                    </div>
+                </div>
+
+                <!-- Automation -->
+                <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)]/50 transition-all">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i data-lucide="code-2" class="text-[rgb(249,5,44)] w-6 h-6"></i>
+                        <h3 class="text-xl font-bold">Automation & DevOps</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Python</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Golang</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Ansible</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Terraform</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">GitLab</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">REST API</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">YANG</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Cisco NSO</span>
+                    </div>
+                </div>
+
+                <!-- Operations -->
+                <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)]/50 transition-all md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i data-lucide="activity" class="text-[rgb(249,5,44)] w-6 h-6"></i>
+                        <h3 class="text-xl font-bold">Network Operations</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Network Planning</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Network Deployment</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Network Migration</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Future Proofing</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">Wireshark</span>
+                        <span class="skill-tag bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] px-3 py-1 rounded text-sm font-mono">RFC-2544</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
-      <div class="contacts-bottom">
-        <a href="https://mohamedasibrahim92i.github.io/MohamedIbrahim/" target="_blank">PORTFOLIO</a>
-        <a href="https://drive.google.com/file/d/1GZLjDlmLWfpM-fzqJ_73dAwB9yStiNME/view" target="_blank">My Resume </a>
-        <a href="https://linkedin.com/in/mohamedasibrahim/" target="_blank">LINKEDIN</a>
-      </div>
-      <div class="welcome">
-        Open to roles in technology architecture, systems integration, and digital transformation.<br>
-        Available immediately • Remote, hybrid, or relocation .
-      </div>
-      <p style="margin-top: 15px; color: #7a9a90; font-size: 0.85em;">
-        You're not on the list. You're in the room.
-      </p>
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-24 bg-black/20">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-[rgb(249,5,44)] font-mono text-2xl">03.</span>
+                    Career Timeline
+                </h2>
+                <div class="h-1 w-20 bg-[rgb(249,5,44)]"></div>
+            </div>
+
+            <div class="relative space-y-12 pl-8 border-l-2 border-[rgb(249,5,44)]/30">
+                
+                <!-- MI-Networks -->
+                <div class="relative experience-item">
+                    <div class="absolute -left-[41px] w-5 h-5 rounded-full bg-[rgb(249,5,44)] border-4 border-[#1a1a2e]"></div>
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-[rgb(249,5,44)]">MI-Networks IT</h3>
+                                <p class="text-gray-400 text-sm">Founder & Principal Engineer</p>
+                            </div>
+                            <span class="font-mono text-sm text-gray-500 bg-black/30 px-3 py-1 rounded">11/2025-Present</span>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm list-disc list-inside marker:text-[rgb(249,5,44)]">
+                            <li>Founded full-spectrum IT firm;grew client base 25%within 8weeks through tailored G-PON/VLAN solutions.</li>
+                            <li>Operationalized ITIL v4And PMP workflows,cut engineer onboarding time 50%via modular Python Ansible program.</li>
+                            <li>Achieved 98%first-time resolution and 100%contract renewal across initial</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Senior Network Solutions Engineer -->
+                <div class="relative experience-item">
+                    <div class="absolute -left-[41px] w-5 h-5 rounded-full bg-[rgb(249,5,44)]/50 border-4 border-[#1a1a2e]"></div>
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-[rgb(249,5,44)]">Senior Network Solutions Engineer</h3>
+                                <p class="text-gray-400 text-sm">Contracts / Freelancer • GIZA, EGYPT</p>
+                            </div>
+                            <span class="font-mono text-sm text-gray-500 bg-black/30 px-3 py-1 rounded">12/2021-10/2025</span>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm list-disc list-inside marker:text-[rgb(249,5,44)]">
+                            <li>Migrated 1,200copper chassis to G-PON;extended network life 7years and saved millions .</li>
+                            <li>Created 45automated test plans;prevented defective shipments and eliminated field failures on 45,000units.</li>
+                            <li>Integrated Cisco NSO with billing REST</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Access Layer Solutions Engineer -->
+                <div class="relative experience-item">
+                    <div class="absolute -left-[41px] w-5 h-5 rounded-full bg-[rgb(249,5,44)]/50 border-4 border-[#1a1a2e]"></div>
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-[rgb(249,5,44)]">Access Layer Solutions Engineer</h3>
+                                <p class="text-gray-400 text-sm">Telecom Egypt ISP</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm list-disc list-inside marker:text-[rgb(249,5,44)]">
+                            <li>Validated firmware on 11M CPE devices,cut annual returns 80%(120k →24k).</li>
+                            <li>Built Testing and validation Cycles for more than 20Vendor network equipments.</li>
+                            <li>Co-authored TR-069security standard adopted by 20+</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Technical Lead -->
+                <div class="relative experience-item">
+                    <div class="absolute -left-[41px] w-5 h-5 rounded-full bg-[rgb(249,5,44)]/50 border-4 border-[#1a1a2e]"></div>
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-[rgb(249,5,44)]">Technical Lead And Field Validation Specialist</h3>
+                                <p class="text-gray-400 text-sm">Telecom Egypt ISP • GIZA, EGYPT</p>
+                            </div>
+                            <span class="font-mono text-sm text-gray-500 bg-black/30 px-3 py-1 rounded">05/2014-02/2019</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-3 italic">Tier-1Internet service provider and service integrator in Egypt.</p>
+                        <ul class="space-y-2 text-gray-300 text-sm list-disc list-inside marker:text-[rgb(249,5,44)]">
+                            <li>Finalized 30k+trouble tickets,delivered 12patches cutting repeat calls 25%.</li>
+                            <li>Maintained 98%defect-reproduction rate and 100%SLA compliance for 36consecutive months.</li>
+                            <li>Trained 14 engineers;5promoted and team turnover reduced</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialized Practice Areas (NEW SECTION) -->
+    <section id="capabilities" class="py-24 bg-black/20 border-y border-white/10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-[rgb(249,5,44)] font-mono text-2xl">04.</span>
+                    Specialized Practice Areas
+                </h2>
+                <p class="text-gray-400 max-w-2xl">High-impact infrastructure initiatives delivered across enterprise and service provider environments. Detailed case studies available upon request.</p>
+                <div class="h-1 w-20 bg-[rgb(249,5,44)] mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Access Modernization -->
+                <div class="practice-card group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[rgb(249,5,44)]/5 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:bg-[rgb(249,5,44)]/10"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="arrow-up-circle" class="w-8 h-8 text-[rgb(249,5,44)]"></i>
+                            <span class="text-xs font-mono text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">01</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white group-hover:text-[rgb(249,5,44)] transition-colors">Copper-to-Fiber Migration</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">DSLAM-to-MSAN transitions, GPON and XGS-PON access layer upgrades, 10G PON orchestration</p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-xs font-mono text-[rgb(249,5,44)] bg-[rgb(249,5,44)]/10 px-2 py-1 rounded">1,200+ Chassis</span>
+                            <span class="text-xs font-mono text-[rgb(249,5,44)] bg-[rgb(249,5,44)]/10 px-2 py-1 rounded">Zero Downtime</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SD-WAN & Cloud -->
+                <div class="practice-card group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[rgb(249,5,44)]/5 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:bg-[rgb(249,5,44)]/10"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="cloud" class="w-8 h-8 text-[rgb(249,5,44)]"></i>
+                            <span class="text-xs font-mono text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">02</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white group-hover:text-[rgb(249,5,44)] transition-colors">SD-WAN & Cloud Networking</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Cisco SD-WAN deployment, Azure vWAN integration, cloud-native network orchestration</p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-xs font-mono text-[rgb(249,5,44)] bg-[rgb(249,5,44)]/10 px-2 py-1 rounded">Multi-cloud</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Security & AAA -->
+                <div class="practice-card group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[rgb(249,5,44)]/5 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:bg-[rgb(249,5,44)]/10"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="shield" class="w-8 h-8 text-[rgb(249,5,44)]"></i>
+                            <span class="text-xs font-mono text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">03</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white group-hover:text-[rgb(249,5,44)] transition-colors">Network Security & NAC</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Aruba ClearPass deployment and surveying, RADIUS/AAA architecture, Zero Trust segmentation</p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-xs font-mono text-[rgb(249,5,44)] bg-[rgb(249,5,44)]/10 px-2 py-1 rounded">Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wireless -->
+                <div class="practice-card group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[rgb(249,5,44)]/5 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:bg-[rgb(249,5,44)]/10"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="wifi" class="w-8 h-8 text-[rgb(249,5,44)]"></i>
+                            <span class="text-xs font-mono text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">04</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white group-hover:text-[rgb(249,5,44)] transition-colors">Enterprise Wi-Fi Deployment</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Wi-Fi 6E/7 site surveying, Aruba wireless infrastructure, high-density venue optimization</p>
+                    </div>
+                </div>
+
+                <!-- Automation & Validation -->
+                <div class="practice-card group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[rgb(249,5,44)]/5 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:bg-[rgb(249,5,44)]/10"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="check-square" class="w-8 h-8 text-[rgb(249,5,44)]"></i>
+                            <span class="text-xs font-mono text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">05</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white group-hover:text-[rgb(249,5,44)] transition-colors">Equipment Auditing & Validation</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Multi-vendor equipment testing (20+ vendors), TR-069 standards implementation, automated validation frameworks</p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-xs font-mono text-[rgb(249,5,44)] bg-[rgb(249,5,44)]/10 px-2 py-1 rounded">11M Devices</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Leadership -->
+                <div class="practice-card group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-[rgb(249,5,44)] transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[rgb(249,5,44)]/5 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:bg-[rgb(249,5,44)]/10"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="layout" class="w-8 h-8 text-[rgb(249,5,44)]"></i>
+                            <span class="text-xs font-mono text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">06</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-white group-hover:text-[rgb(249,5,44)] transition-colors">Technical Project Leadership</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Solution orchestration, technical product ownership, cross-functional team leadership, ITIL v4/PMP workflows</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom CTA -->
+            <div class="mt-12 text-center p-8 border border-dashed border-white/20 rounded-lg bg-white/5">
+                <p class="text-gray-400 font-mono text-sm mb-2">DETAILED ARCHITECTURE DIAGRAMS AND CASE STUDIES</p>
+                <p class="text-white font-semibold">Available during technical interview</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics Visualization -->
+    <section id="metrics" class="py-24">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-[rgb(249,5,44)] font-mono text-2xl">05.</span>
+                    Impact Metrics
+                </h2>
+                <div class="h-1 w-20 bg-[rgb(249,5,44)]"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Metric 1 -->
+                <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-[rgb(249,5,44)]/20 to-transparent border border-[rgb(249,5,44)]/30 p-8">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-bold font-mono mb-2 text-[rgb(249,5,44)]" id="counter1">0</div>
+                        <div class="text-gray-400">Copper Chassis Migrated to G-PON</div>
+                        <div class="mt-4 text-sm text-gray-500">Extended network life 7 years</div>
+                    </div>
+                    <i data-lucide="server" class="absolute -bottom-4 -right-4 w-32 h-32 text-[rgb(249,5,44)]/10"></i>
+                </div>
+
+                <!-- Metric 2 -->
+                <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-[rgb(249,5,44)]/20 to-transparent border border-[rgb(249,5,44)]/30 p-8">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-bold font-mono mb-2 text-[rgb(249,5,44)]" id="counter2">0</div>
+                        <div class="text-gray-400">Automated Test Plans Created</div>
+                        <div class="mt-4 text-sm text-gray-500">Eliminated field failures on 45,000 units</div>
+                    </div>
+                    <i data-lucide="check-circle" class="absolute -bottom-4 -right-4 w-32 h-32 text-[rgb(249,5,44)]/10"></i>
+                </div>
+
+                <!-- Metric 3 -->
+                <div class="relative overflow-hidden rounded-lg bg-gradient-to-br from-[rgb(249,5,44)]/20 to-transparent border border-[rgb(249,5,44)]/30 p-8">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-bold font-mono mb-2 text-[rgb(249,5,44)]">11M</div>
+                        <div class="text-gray-400">Network Elements Validated</div>
+                        <div class="mt-4 text-sm text-gray-500">Cut annual returns by 80%</div>
+                    </div>
+                    <i data-lucide="cpu" class="absolute -bottom-4 -right-4 w-32 h-32 text-[rgb(249,5,44)]/10"></i>
+                </div>
+            </div>
+
+            <!-- Additional Achievement Cards -->
+            <div class="mt-8 grid md:grid-cols-2 gap-6">
+                <div class="flex items-center gap-4 p-6 bg-white/5 rounded-lg border border-white/10">
+                    <div class="p-3 bg-[rgb(249,5,44)]/20 rounded-lg">
+                        <i data-lucide="ticket" class="w-6 h-6 text-[rgb(249,5,44)]"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold font-mono">30K+</div>
+                        <div class="text-sm text-gray-400">Trouble Tickets Analyzed</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 p-6 bg-white/5 rounded-lg border border-white/10">
+                    <div class="p-3 bg-[rgb(249,5,44)]/20 rounded-lg">
+                        <i data-lucide="users" class="w-6 h-6 text-[rgb(249,5,44)]"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold font-mono">14</div>
+                        <div class="text-sm text-gray-400">Engineers Trained </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer & Education -->
+    <section class="py-24 bg-black/20 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="award" class="text-[rgb(249,5,44)]"></i>
+                    Volunteer Experience
+                </h3>
+                <div class="bg-white/5 border border-white/10 rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-[rgb(249,5,44)]">ATCDS 2025</h4>
+                        <span class="text-xs text-gray-500">12/2025</span>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-2">Appreciation Letter for Supporting ASEAN Technology Cooperation And Development Summit 2025</p>
+                    <p class="text-xs text-gray-500">KUALA LUMPUR, MALAYSIA</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="graduation-cap" class="text-[rgb(249,5,44)]"></i>
+                    Education & Languages
+                </h3>
+                <div class="space-y-4">
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-6">
+                        <h4 class="font-bold">Bachelor of Engineering in Electronics and Communications</h4>
+                        <p class="text-sm text-gray-400">Communicat GEI Institute • GIZA, EGYPT</p>
+                    </div>
+                    <div class="flex gap-4 text-sm">
+                        <span class="px-3 py-1 bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] rounded-full">ENGLISH: Native</span>
+                        <span class="px-3 py-1 bg-[rgb(249,5,44)]/20 text-[rgb(249,5,44)] rounded-full">ARABIC: Native</span>
+                        <span class="px-3 py-1 bg-white/10 text-gray-400 rounded-full">BAHASA MELAYU: Working</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 network-bg opacity-30"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex items-center justify-center gap-3">
+                    <span class="text-[rgb(249,5,44)] font-mono text-2xl">06.</span>
+                    Initialize Connection
+                </h2>
+                <p class="text-gray-400">Ready to optimize your network infrastructure?</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="mailto:mohamed.a.s.ibrahim.9.2.i@gmail.com" class="group p-6 bg-white/5 border border-white/10 rounded-lg hover:border-[rgb(249,5,44)] hover:bg-[rgb(249,5,44)]/10 transition-all text-center">
+                    <i data-lucide="mail" class="w-8 h-8 mx-auto mb-3 text-[rgb(249,5,44)] group-hover:scale-110 transition-transform"></i>
+                    <div class="font-mono text-sm break-all">mohamed.a.s.ibrahim.9.2.i@gmail.com</div>
+                </a>
+                
+                <a href="https://wa.me/601160929841" target="_blank" class="group p-6 bg-white/5 border border-white/10 rounded-lg hover:border-[rgb(249,5,44)] hover:bg-[rgb(249,5,44)]/10 transition-all text-center">
+                    <i data-lucide="message-circle" class="w-8 h-8 mx-auto mb-3 text-[rgb(249,5,44)] group-hover:scale-110 transition-transform"></i>
+                    <div class="font-mono text-sm">WhatsApp</div>
+                    <div class="text-xs text-gray-500 mt-1">+601160929841</div>
+                </a>
+                
+                <a href="https://linkedin.com/in/mohamedasibrahim" target="_blank" class="group p-6 bg-white/5 border border-white/10 rounded-lg hover:border-[rgb(249,5,44)] hover:bg-[rgb(249,5,44)]/10 transition-all text-center">
+                    <i data-lucide="linkedin" class="w-8 h-8 mx-auto mb-3 text-[rgb(249,5,44)] group-hover:scale-110 transition-transform"></i>
+                    <div class="font-mono text-sm">LinkedIn</div>
+                </a>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(249,5,44)]/10 border border-[rgb(249,5,44)]/30 text-[rgb(249,5,44)] text-sm font-mono">
+                    <span class="w-2 h-2 rounded-full bg-[rgb(249,5,44)] animate-pulse"></span>
+                    Kuala Lumpur, Malaysia
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm font-mono">
+        <p>© 2026 Mohamed Ibrahim | Network Infrastructure Engineer</p>
     </footer>
-  </div>
 
-  <script>
-    // HOVERBOARD FUNCTIONALITY ONLY (no access granted animation)
-    document.addEventListener('DOMContentLoaded', () => {
-      const hoverboard = document.getElementById('hoverboard');
-      const trigger = document.getElementById('hoverboardTrigger');
-      
-      trigger.addEventListener('click', () => {
-        hoverboard.classList.toggle('open');
-      });
-      
-      // Click outside to close
-      document.addEventListener('click', (e) => {
-        if (hoverboard.classList.contains('open') && 
-            !hoverboard.contains(e.target) && 
-            !trigger.contains(e.target)) {
-          hoverboard.classList.remove('open');
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Typewriter Effect
+        const phrases = [
+            "Network Infrastructure Engineer",
+            "GPON/FTTH Specialist", 
+            "Python Automation Expert",
+            "Multi-Vendor Integration Lead"
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeText = document.getElementById('type-text');
+
+        function typeWriter() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typeText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typeText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
         }
-      });
-      
-      // Static overlay animation
-      setInterval(() => {
-        const staticOverlay = document.querySelector('.static-overlay');
-        if (staticOverlay) {
-          staticOverlay.style.opacity = 0.3 + Math.random() * 0.15;
+        typeWriter();
+
+        // Terminal Animation
+        const terminalLines = document.querySelectorAll('.typing-line');
+        let lineIndex = 0;
+        
+        function showTerminalLine() {
+            if (lineIndex < terminalLines.length) {
+                terminalLines[lineIndex].style.opacity = '1';
+                terminalLines[lineIndex].classList.add('typing-effect');
+                lineIndex++;
+                setTimeout(showTerminalLine, 300);
+            }
         }
-      }, 2000);
-    });
-  </script>
+        setTimeout(showTerminalLine, 1000);
+
+        // Animated Counters
+        function animateCounter(id, target, duration = 2000) {
+            const element = document.getElementById(id);
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Intersection Observer for counters
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'counter1') animateCounter('counter1', 1200);
+                    if (entry.target.id === 'counter2') animateCounter('counter2', 45);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.getElementById('counter1') && observer.observe(document.getElementById('counter1'));
+        document.getElementById('counter2') && observer.observe(document.getElementById('counter2'));
+
+        // Packet Animation
+        function createPacket() {
+            const container = document.getElementById('packets-container');
+            const packet = document.createElement('div');
+            packet.className = 'packet';
+            packet.style.left = Math.random() * 100 + '%';
+            packet.style.top = Math.random() * 100 + '%';
+            container.appendChild(packet);
+
+            gsap.to(packet, {
+                opacity: 1,
+                duration: 0.1,
+                onComplete: () => {
+                    gsap.to(packet, {
+                        x: (Math.random() - 0.5) * 200,
+                        y: (Math.random() - 0.5) * 200,
+                        opacity: 0,
+                        duration: 2,
+                        ease: "power1.out",
+                        onComplete: () => packet.remove()
+                    });
+                }
+            });
+        }
+
+        setInterval(createPacket, 500);
+
+        // GSAP Scroll Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.experience-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                x: -50,
+                opacity: 0,
+                duration: 0.6,
+                delay: i * 0.1
+            });
+        });
+
+        // Practice Cards 3D Tilt Effect
+        document.querySelectorAll('.practice-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
-
-
-
